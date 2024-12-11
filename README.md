@@ -14,6 +14,42 @@ pnpm dev
 bun dev
 ```
 
+
+'''bash
+#Folder Structure
+resume-analyzer/
+├── public/
+│   ├── favicon.ico
+│   ├── logo.png            # App logo or branding assets
+├── src/
+│   ├── components/
+│   │   ├── UploadResume.tsx  # Component for resume upload and job description input
+│   │   ├── AnalysisResult.tsx # Component to display analysis results
+│   │   ├── Navbar.tsx        # Navigation bar
+│   │   ├── Footer.tsx        # Footer section
+│   ├── pages/
+│   │   ├── api/
+│   │   │   ├── analyze.ts    # API route for handling file uploads and GPT-4 analysis
+│   │   ├── index.tsx         # Main page (upload and results display)
+│   │   ├── _app.tsx          # Custom App component for global styles
+│   │   ├── _document.tsx     # Custom Document for meta and initial HTML structure
+│   ├── styles/
+│   │   ├── globals.css       # Global styles (Tailwind CSS setup)
+│   │   ├── UploadResume.module.css # Optional CSS module for UploadResume component
+│   ├── utils/
+│   │   ├── fileHelpers.ts    # Helper functions for file processing
+│   │   ├── apiHelpers.ts     # Helper functions for interacting with OpenAI API
+│   ├── types/
+│   │   ├── index.d.ts        # Shared TypeScript type definitions
+├── .env.local                # Environment variables (e.g., OPENAI_API_KEY)
+├── .gitignore                # Git ignore file
+├── tsconfig.json             # TypeScript configuration
+├── package.json              # Dependencies and scripts
+├── tailwind.config.js        # Tailwind CSS configuration
+├── postcss.config.js         # PostCSS configuration
+├── next.config.js            # Next.js configuration
+'''
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
