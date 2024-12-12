@@ -1,20 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 import fs from "fs/promises";
 
 const analyzeResume = async (resumeText: string, jobDescription: string) => {
-  const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY!,
-  });
-  const openai = new OpenAIApi(configuration);
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 
   const prompt = `
 Analyze the following resume against the provided job description:
 Resume:
-${resumeText}
+{resumeText}
 
 Job Description:
-${jobDescription}
+{jobDescription}
 
 Provide:
 1. A relevance score out of 10.
@@ -22,13 +19,22 @@ Provide:
 3. Suggestions to improve the resume for this job description.
 `;
 
-  const response = await openai.createCompletion({
+  const response = await openai.chat.completions.create({
     model: "gpt-4",
-    prompt,
+    messages: [
+      {
+        role: "system",
+        content: "You are an assistant specialized in analyzing resumes and job descriptions."
+      },
+      {
+        role: "user",
+        content: prompt
+      }
+    ],
     max_tokens: 500,
   });
 
-  return response.data.choices[0].text;
+  return response.choices[0].message?.content;
 };
 
 export async function POST(req: NextRequest) {
@@ -51,3 +57,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Error analyzing resume" }, { status: 500 });
   }
 }
+
+export async function GET(req: NextRequest) {
+  const resumeText = await fs.readFile("./resume.txt", "utf-8");
+  const jobDescription = await fs.readFile("./job-description.txt", "utf-8");
+
+  const analysis = await analyzeResume(resumeText, jobDescription);
+  return NextResponse.json({ analysis });
+}
+
+export default {
+  POST,
+  GET,
+};
+
