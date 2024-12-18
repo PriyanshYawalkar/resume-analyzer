@@ -57,7 +57,7 @@ const UploadResume: React.FC = () => {
         <textarea
           placeholder="Enter job description"
           value={jobDescription}
-          onChange={(e) => setJobDescription(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setJobDescription(e.target.value)}
           className="w-full border rounded-md p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
         />
         <div className="mb-4">
@@ -71,9 +71,8 @@ const UploadResume: React.FC = () => {
         <button
           onClick={handleAnalyze}
           disabled={loading}
-          className={`w-full py-2 px-4 rounded text-white font-semibold transition duration-200 ${
-            loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
-          }`}
+          className={`w-full py-2 px-4 rounded text-white font-semibold transition duration-200 ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+            }`}
         >
           {loading ? "Analyzing..." : "Analyze"}
         </button>
@@ -86,7 +85,7 @@ const UploadResume: React.FC = () => {
             <div className="mt-4">
               <h3 className="text-lg font-semibold text-gray-800">Suggestions:</h3>
               <ul className="list-disc list-inside text-gray-700 mt-2">
-                {result.suggestions.map((s, i) => (
+                {result.suggestions.map((s: string, i: number) => (
                   <li key={i}>{s}</li>
                 ))}
               </ul>
@@ -94,7 +93,7 @@ const UploadResume: React.FC = () => {
             <div className="mt-4">
               <h3 className="text-lg font-semibold text-gray-800">Mistakes:</h3>
               <ul className="list-disc list-inside text-gray-700 mt-2">
-                {result.mistakes.map((m, i) => (
+                {result.mistakes.map((m: string, i: number) => (
                   <li key={i}>{m}</li>
                 ))}
               </ul>
